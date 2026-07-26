@@ -96,6 +96,14 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function ArrowUpRightIcon(props: IconProps) {
+  return (
+    <svg {...stroked} {...props}>
+      <path d="M7 17 17 7M8.5 7H17v8.5" />
+    </svg>
+  );
+}
+
 export function ArrowLeftIcon(props: IconProps) {
   return (
     <svg {...stroked} {...props}>

@@ -211,7 +211,7 @@ function Rail({
                       <motion.span
                         layoutId={`${id}-marker`}
                         transition={reduceMotion ? instant : spring}
-                        className="absolute size-1.5 rounded-full bg-rose-600 dark:bg-rose-500"
+                        className="absolute size-1.5 rounded-full bg-kiln"
                       />
                     )}
                   </span>

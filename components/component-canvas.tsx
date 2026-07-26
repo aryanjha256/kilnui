@@ -3,7 +3,7 @@
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { dotGrid, squircle } from "@/lib/style";
+import { squircle, stage } from "@/lib/style";
 import { cn } from "@/lib/utils";
 import {
   CheckIcon,
@@ -56,16 +56,11 @@ export function ComponentCanvas({
       transition={transition}
       style={{ borderRadius: 28, ...squircle }}
       className={cn(
-        "relative flex h-full w-full flex-col items-center justify-center overflow-hidden border border-border/60 bg-card/50 px-6 py-20 backdrop-blur-md",
+        stage,
+        "relative flex h-full w-full flex-col items-center justify-center overflow-hidden border border-border/60 px-6 py-20 backdrop-blur-md",
         theme,
       )}
     >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={dotGrid}
-      />
-
       <h1 className="sr-only">{title}</h1>
 
       <div className="absolute top-4 right-4 z-20 flex items-center gap-0.5 rounded-full border border-border/60 bg-background/70 p-1 shadow-sm backdrop-blur-md">

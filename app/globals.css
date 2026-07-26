@@ -4,6 +4,7 @@
 
 :root {
   --radius: 0.625rem;
+  --kiln: oklch(0.514 0.222 16.935);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -26,6 +27,7 @@
 
 /* mirrors :root so a preview can force light inside a dark page */
 .light {
+  --kiln: oklch(0.514 0.222 16.935);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -47,6 +49,7 @@
 }
 
 .dark {
+  --kiln: oklch(0.645 0.246 16.439);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -68,6 +71,7 @@
 }
 
 @theme inline {
+  --color-kiln: var(--kiln);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

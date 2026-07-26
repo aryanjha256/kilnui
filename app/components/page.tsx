@@ -1,75 +1,54 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
-import { components, type ComponentMeta } from "@/lib/components";
+import { components } from "@/lib/components";
 import { demos } from "@/lib/demos";
 import { SITE_KEYWORDS } from "@/lib/seo";
-import { dotGrid, panel, squircle } from "@/lib/style";
-import { cn } from "@/lib/utils";
+import { ComponentCard } from "@/components/component-card";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   title: "Components | Kiln UI",
   description:
-    "Every component in the Kiln UI registry. Browse the live demo, then install with the shadcn CLI.",
+    "Every component in the Kiln UI registry. Try the live demo, then install with the shadcn CLI.",
   keywords: SITE_KEYWORDS,
   alternates: { canonical: "/components" },
 };
 
 export default function ComponentsPage() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-2.5 px-1.5 pt-20 pb-1.5 md:gap-3 md:px-2.5 md:pt-24 md:pb-2.5">
+    <>
       <SiteHeader />
-      <div
-        className={cn(panel, "px-6 py-7 md:px-9 md:py-9")}
-        style={squircle}
-      >
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-          Components
-        </h1>
-        <p className="mt-2 max-w-xl text-muted-foreground">
-          Every component in the registry. Try the live demo, then install with
-          the shadcn CLI.
-        </p>
-        <p className="mt-4 text-sm text-muted-foreground">
-          {components.length} components
-        </p>
-      </div>
+      <main className="mx-auto w-full max-w-6xl px-4 pt-32 pb-20 md:px-6 md:pt-40 md:pb-28">
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-md">
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-kiln"
+            />
+            {components.length} components
+          </span>
 
-      <div className="grid gap-2.5 md:gap-3 lg:grid-cols-2">
-        {components.map((item) => (
-          <ComponentCard key={item.name} item={item} />
-        ))}
-      </div>
-    </main>
-  );
-}
+          <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight md:text-5xl">
+            Components you own, not dependencies.
+          </h1>
 
-function ComponentCard({ item }: { item: ComponentMeta }) {
-  return (
-    <article
-      className={cn(panel, "group relative flex flex-col overflow-hidden")}
-      style={squircle}
-    >
-      <div
-        className="flex h-56 items-center justify-center bg-background/40 px-6 transition-colors group-hover:bg-background/60"
-        style={dotGrid}
-      >
-        <div inert className="pointer-events-none select-none">
-          {demos[item.name]}
+          <p className="mt-4 max-w-xl text-pretty font-medium text-muted-foreground md:text-lg">
+            Every component is a single file. Add it with the shadcn CLI, then
+            change anything you like.{" "}
+            <span className="text-kiln">
+              [Every card runs the live component]
+            </span>
+          </p>
         </div>
-      </div>
-      <div className="border-t border-border/60 px-5 py-4">
-        <h2 className="text-sm font-semibold tracking-tight">
-          <Link
-            href={item.href}
-            className="after:absolute after:inset-0 after:rounded-[inherit] focus-visible:outline-none"
-          >
-            {item.title}
-          </Link>
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-      </div>
-    </article>
+
+        <div className="mt-14 grid gap-2.5 md:mt-16 md:gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {components.map((item, index) => (
+            <ComponentCard key={item.name} item={item} index={index}>
+              {demos[item.name]}
+            </ComponentCard>
+          ))}
+        </div>
+      </main>
+    </>
   );
 }
