@@ -1,0 +1,105 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kiln",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "utils",
+      "title": "cn",
+      "description": "Class name helper that merges clsx output through tailwind-merge.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "@lib/kiln/utils.ts"
+        }
+      ],
+      "type": "registry:lib"
+    },
+    {
+      "name": "use-prefers-reduced-motion",
+      "title": "usePrefersReducedMotion",
+      "description": "SSR-safe hook that tracks the user's reduced motion preference.",
+      "files": [
+        {
+          "path": "registry/hooks/use-prefers-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "@hooks/kiln/use-prefers-reduced-motion.ts"
+        }
+      ],
+      "type": "registry:hook"
+    },
+    {
+      "name": "text-shimmer",
+      "title": "Text Shimmer",
+      "description": "Animated gradient sweep across text.",
+      "registryDependencies": [
+        "@kiln/utils",
+        "@kiln/use-prefers-reduced-motion"
+      ],
+      "files": [
+        {
+          "path": "registry/text/text-shimmer/text-shimmer.tsx",
+          "type": "registry:ui",
+          "target": "@ui/kiln/text-shimmer.tsx"
+        }
+      ],
+      "cssVars": {
+        "theme": {
+          "--kiln-shimmer-duration": "2s"
+        }
+      },
+      "css": {
+        "@keyframes kiln-shimmer": {
+          "from": {
+            "background-position": "100% center"
+          },
+          "to": {
+            "background-position": "0% center"
+          }
+        },
+        "@utility kiln-text-shimmer": {
+          "display": "inline-block",
+          "background-clip": "text",
+          "-webkit-background-clip": "text",
+          "color": "transparent",
+          "-webkit-text-fill-color": "transparent",
+          "background-repeat": "no-repeat",
+          "background-size": "250% 100%",
+          "background-image": "linear-gradient(90deg, color-mix(in oklch, currentColor 35%, transparent) 0%, color-mix(in oklch, currentColor 35%, transparent) calc(50% - var(--kiln-shimmer-spread, 40px)), currentColor 50%, color-mix(in oklch, currentColor 35%, transparent) calc(50% + var(--kiln-shimmer-spread, 40px)), color-mix(in oklch, currentColor 35%, transparent) 100%)",
+          "animation": "kiln-shimmer var(--kiln-shimmer-duration, 2s) linear infinite"
+        }
+      },
+      "categories": [
+        "text",
+        "animation"
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "duration-picker",
+      "title": "Duration Picker",
+      "description": "Segmented hours, minutes, and seconds input backed by a total in seconds.",
+      "registryDependencies": [
+        "input",
+        "@kiln/utils"
+      ],
+      "files": [
+        {
+          "path": "registry/inputs/duration-picker/duration-picker.tsx",
+          "type": "registry:ui",
+          "target": "@ui/kiln/duration-picker.tsx"
+        }
+      ],
+      "categories": [
+        "inputs",
+        "time"
+      ],
+      "type": "registry:ui"
+    }
+  ]
+}

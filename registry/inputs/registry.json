@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "duration-picker",
+      "type": "registry:ui",
+      "title": "Duration Picker",
+      "description": "Segmented hours, minutes, and seconds input backed by a total in seconds.",
+      "categories": ["inputs", "time"],
+      "registryDependencies": ["input", "@kiln/utils"],
+      "files": [
+        {
+          "path": "duration-picker/duration-picker.tsx",
+          "type": "registry:ui",
+          "target": "@ui/kiln/duration-picker.tsx"
+        }
+      ]
+    }
+  ]
+}

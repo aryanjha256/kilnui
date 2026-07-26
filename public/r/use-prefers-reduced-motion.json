@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-prefers-reduced-motion",
+  "title": "usePrefersReducedMotion",
+  "description": "SSR-safe hook that tracks the user's reduced motion preference.",
+  "files": [
+    {
+      "path": "registry/hooks/use-prefers-reduced-motion.ts",
+      "content": "import { useSyncExternalStore } from \"react\";\n\nconst QUERY = \"(prefers-reduced-motion: reduce)\";\n\n// subscribe to changes; runs on the client only\nfunction subscribe(callback: () => void) {\n  const mql = window.matchMedia(QUERY);\n  mql.addEventListener(\"change\", callback);\n  return () => mql.removeEventListener(\"change\", callback);\n}\n\nfunction getSnapshot() {\n  return window.matchMedia(QUERY).matches;\n}\n\n// server render assumes motion is allowed\nfunction getServerSnapshot() {\n  return false;\n}\n\nexport function usePrefersReducedMotion() {\n  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);\n}\n",
+      "type": "registry:hook",
+      "target": "@hooks/kiln/use-prefers-reduced-motion.ts"
+    }
+  ],
+  "type": "registry:hook"
+}

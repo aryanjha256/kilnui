@@ -1,0 +1,11 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kiln",
+  "homepage": "http://localhost:3000",
+  "include": [
+    "registry/lib/registry.json",
+    "registry/hooks/registry.json",
+    "registry/text/registry.json",
+    "registry/inputs/registry.json"
+  ]
+}
