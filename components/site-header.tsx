@@ -87,7 +87,7 @@ export function SiteHeader() {
           >
             <GitHubIcon className="size-4.5" />
             {stars !== null ? (
-              <span className="text-sm font-medium tabular-nums">
+              <span className="text-sm font-medium tabular-nums hidden sm:inline">
                 {formatStars(stars)}
               </span>
             ) : null}

@@ -109,6 +109,25 @@
   }
 }
 
+@keyframes kiln-footer-drift {
+  0%,
+  100% {
+    transform: translate3d(-1%, 1%, 0) scale(1.08);
+  }
+  40% {
+    transform: translate3d(1.5%, -1%, 0) scale(1.11);
+  }
+  72% {
+    transform: translate3d(0.5%, 1.5%, 0) scale(1.09);
+  }
+}
+
+.kiln-footer-gradient {
+  transform-origin: 50% 75%;
+  animation: kiln-footer-drift 20s ease-in-out infinite;
+  will-change: transform;
+}
+
 @utility kiln-text-shimmer {
   display: inline-block;
   background-clip: text;
@@ -128,6 +147,13 @@
     color-mix(in oklch, currentColor 35%, transparent) 100%
   );
   animation: kiln-shimmer var(--kiln-shimmer-duration, 2s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kiln-footer-gradient {
+    animation: none;
+    transform: scale(1.08);
+  }
 }
 
 @layer base {

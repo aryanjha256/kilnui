@@ -5,6 +5,7 @@ import { demos } from "@/lib/demos";
 import { SITE_KEYWORDS } from "@/lib/seo";
 import { ComponentCard } from "@/components/component-card";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Components | Kiln UI",
@@ -21,10 +22,6 @@ export default function ComponentsPage() {
       <main className="mx-auto w-full max-w-6xl px-4 pt-32 pb-20 md:px-6 md:pt-40 md:pb-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-md">
-            <span
-              aria-hidden="true"
-              className="size-1.5 rounded-full bg-kiln"
-            />
             {components.length} components
           </span>
 
@@ -35,7 +32,7 @@ export default function ComponentsPage() {
           <p className="mt-4 max-w-xl text-pretty font-medium text-muted-foreground md:text-lg">
             Every component is a single file. Add it with the shadcn CLI, then
             change anything you like.{" "}
-            <span className="text-kiln">
+            <span className="text-kiln font-light">
               [Every card runs the live component]
             </span>
           </p>
@@ -49,6 +46,7 @@ export default function ComponentsPage() {
           ))}
         </div>
       </main>
+      <SiteFooter />
     </>
   );
 }
