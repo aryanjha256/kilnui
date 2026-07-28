@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { components, getComponent, installCommand } from "@/lib/components";
-import { readDemoSource } from "@/lib/demo-source";
+import { components, getComponent } from "@/lib/components";
 import { demos } from "@/lib/demos";
 import { componentPageMetadata } from "@/lib/seo";
 import { ComponentCanvas } from "@/components/component-canvas";
@@ -30,16 +29,5 @@ export default async function ComponentPage({
   const meta = getComponent(slug);
   if (!meta) notFound();
 
-  const code = await readDemoSource(slug);
-
-  return (
-    <ComponentCanvas
-      title={meta.title}
-      caption={meta.description}
-      install={installCommand(slug)}
-      code={code}
-    >
-      {demos[slug]}
-    </ComponentCanvas>
-  );
+  return <ComponentCanvas meta={meta}>{demos[slug]}</ComponentCanvas>;
 }

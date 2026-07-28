@@ -1,77 +1,54 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
+import type { ComponentMeta } from "@/lib/components";
 import { squircle, stage } from "@/lib/style";
 import { toggleTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import {
-  CheckIcon,
   CodeIcon,
   ContrastIcon,
-  CopyIcon,
   ExpandIcon,
   ShrinkIcon,
 } from "@/components/icons";
 import { useWorkspace } from "@/components/workspace-shell";
 
-const spring = {
-  type: "spring",
-  stiffness: 380,
-  damping: 36,
-  mass: 0.9,
-} as const;
-const instant = { duration: 0 } as const;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function ComponentCanvas({
-  title,
-  caption,
-  install,
-  code,
+  meta,
   children,
 }: {
-  title: string;
-  caption: string;
-  install: string;
-  code?: string | null;
+  meta: ComponentMeta;
   children: React.ReactNode;
 }) {
-  const { expanded, toggleExpanded, reduceMotion } = useWorkspace();
-  const [showCode, setShowCode] = React.useState(false);
-  const transition = reduceMotion ? instant : spring;
+  const reduceMotion = useReducedMotion();
+  const { detailsOpen, toggleDetails, codeOpen, toggleCode, hasCode } =
+    useWorkspace();
 
   return (
-    <motion.section
-      initial={false}
-      animate={{ borderRadius: expanded ? 0 : 28 }}
-      transition={transition}
-      style={{ borderRadius: 28, ...squircle }}
-      className={cn(
-        stage,
-        "relative flex h-full w-full flex-col items-center justify-center overflow-hidden border border-border/60 px-6 py-20 backdrop-blur-md",
-      )}
-    >
-      <h1 className="sr-only">{title}</h1>
-
-      <div className="absolute top-4 right-4 z-20 flex items-center gap-0.5 rounded-full border border-border/60 bg-background/70 p-1 shadow-sm backdrop-blur-md">
+    <>
+      {/* fixed to the window so no panel opening can shift it */}
+      <div className="fixed top-6 right-6 z-30 flex items-center gap-0.5 rounded-full border border-border/60 bg-background/70 p-1 shadow-sm backdrop-blur-md">
         <ToolButton
-          label={expanded ? "Exit full screen" : "Expand preview"}
-          onClick={toggleExpanded}
+          label={detailsOpen ? "Hide details" : "Show details"}
+          pressed={detailsOpen}
+          onClick={toggleDetails}
           reduceMotion={reduceMotion}
         >
-          {expanded ? (
+          {detailsOpen ? (
             <ShrinkIcon className="size-4" />
           ) : (
             <ExpandIcon className="size-4" />
           )}
         </ToolButton>
-        {code && (
+        {hasCode && (
           <ToolButton
-            label={showCode ? "Hide code" : "Show code"}
-            pressed={showCode}
-            onClick={() => setShowCode((value) => !value)}
+            label={codeOpen ? "Hide code" : "Show code"}
+            pressed={codeOpen}
+            onClick={toggleCode}
             reduceMotion={reduceMotion}
           >
             <CodeIcon className="size-4" />
@@ -86,106 +63,38 @@ export function ComponentCanvas({
         </ToolButton>
       </div>
 
-      <div className="relative flex w-full flex-col items-center gap-8">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease }}
-          className="flex w-full flex-col items-center justify-center"
-        >
-          {children}
-        </motion.div>
-
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.12, ease }}
-          className="max-w-md text-center text-sm text-muted-foreground"
-        >
-          {caption}
-        </motion.p>
-      </div>
-
-      <AnimatePresence>
-        {showCode && code && (
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={transition}
-            style={squircle}
-            className="absolute inset-x-0 bottom-0 z-20 flex max-h-[70%] flex-col rounded-t-[28px] border-t border-border/60 bg-background/95 backdrop-blur-md"
-          >
-            <CodePanel install={install} code={code} />
-          </motion.div>
+      <section
+        style={{ borderRadius: 28, ...squircle }}
+        className={cn(
+          stage,
+          "relative flex h-full w-full flex-col items-center justify-center overflow-hidden border border-border/60 px-6 py-20 backdrop-blur-md",
         )}
-      </AnimatePresence>
-    </motion.section>
-  );
-}
+      >
+        <h1 className="sr-only">{meta.title}</h1>
 
-function CodePanel({ install, code }: { install: string; code: string }) {
-  const [copied, setCopied] = React.useState<"install" | "code" | null>(null);
+        {/* fixed width, so a resizing canvas moves this block without re-laying it out */}
+        <div className="relative flex w-md max-w-full flex-col items-center gap-8">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease }}
+            className="flex w-full flex-col items-center justify-center"
+          >
+            {children}
+          </motion.div>
 
-  const copy = async (value: string, key: "install" | "code") => {
-    await navigator.clipboard.writeText(value);
-    setCopied(key);
-    window.setTimeout(() => setCopied(null), 1500);
-  };
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.12, ease }}
+            className="max-w-md text-center text-sm text-muted-foreground"
+          >
+            {meta.description}
+          </motion.p>
+        </div>
 
-  return (
-    <>
-      <div className="flex shrink-0 items-center gap-3 px-6 pt-5 pb-4">
-        <code className="min-w-0 flex-1 truncate rounded-full border border-border/60 bg-muted/40 px-4 py-2 font-mono text-xs">
-          {install}
-        </code>
-        <CopyButton
-          copied={copied === "install"}
-          onClick={() => copy(install, "install")}
-          label="Copy install command"
-        />
-      </div>
-
-      <div className="flex shrink-0 items-center justify-between border-t border-border/60 px-6 py-3">
-        <p className="text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase">
-          Usage
-        </p>
-        <CopyButton
-          copied={copied === "code"}
-          onClick={() => copy(code, "code")}
-          label="Copy example"
-        />
-      </div>
-
-      <pre className="min-h-0 flex-1 overflow-auto px-6 pt-2 pb-6 font-mono text-xs leading-relaxed">
-        <code>{code}</code>
-      </pre>
+      </section>
     </>
-  );
-}
-
-function CopyButton({
-  copied,
-  onClick,
-  label,
-}: {
-  copied: boolean;
-  onClick: () => void;
-  label: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
-    >
-      {copied ? (
-        <CheckIcon className="size-4" />
-      ) : (
-        <CopyIcon className="size-4" />
-      )}
-    </button>
   );
 }
 

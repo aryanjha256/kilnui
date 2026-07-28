@@ -41,7 +41,10 @@ export function PanelIcon(props: IconProps) {
 export function CodeIcon(props: IconProps) {
   return (
     <svg {...stroked} {...props}>
-      <path d="M9 8l-4 4 4 4M15 8l4 4-4 4" />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 8l-4 4l4 4" />
+      <path d="M17 8l4 4l-4 4" />
+      <path d="M14 4l-4 16" />
     </svg>
   );
 }
@@ -49,7 +52,11 @@ export function CodeIcon(props: IconProps) {
 export function ExpandIcon(props: IconProps) {
   return (
     <svg {...stroked} {...props}>
-      <path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+      <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+      <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+      <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
     </svg>
   );
 }
@@ -57,7 +64,11 @@ export function ExpandIcon(props: IconProps) {
 export function ShrinkIcon(props: IconProps) {
   return (
     <svg {...stroked} {...props}>
-      <path d="M9 4v5H4M15 20v-5h5M20 9h-5V4M4 15h5v5" />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M15 19v-2a2 2 0 0 1 2 -2h2" />
+      <path d="M15 5v2a2 2 0 0 0 2 2h2" />
+      <path d="M5 15h2a2 2 0 0 1 2 2v2" />
+      <path d="M5 9h2a2 2 0 0 0 2 -2v-2" />
     </svg>
   );
 }

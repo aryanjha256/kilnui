@@ -156,10 +156,39 @@
   }
 }
 
+/* shiki ships both themes as custom properties, the class picks one */
+.shiki {
+  background-color: transparent !important;
+  font-family: inherit;
+}
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
     outline-color: var(--color-ring);
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--muted-foreground) 30%, transparent)
+      transparent;
+  }
+  /* older webkit, which ignores the standard properties above */
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--muted-foreground) 30%, transparent);
   }
   body {
     background-color: var(--color-background);
