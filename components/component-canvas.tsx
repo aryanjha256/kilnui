@@ -4,6 +4,7 @@ import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { squircle, stage } from "@/lib/style";
+import { toggleTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import {
   CheckIcon,
@@ -39,15 +40,7 @@ export function ComponentCanvas({
 }) {
   const { expanded, toggleExpanded, reduceMotion } = useWorkspace();
   const [showCode, setShowCode] = React.useState(false);
-  const [theme, setTheme] = React.useState<"light" | "dark" | null>(null);
   const transition = reduceMotion ? instant : spring;
-
-  const flipTheme = () => {
-    const current =
-      theme ??
-      (document.documentElement.classList.contains("dark") ? "dark" : "light");
-    setTheme(current === "dark" ? "light" : "dark");
-  };
 
   return (
     <motion.section
@@ -58,7 +51,6 @@ export function ComponentCanvas({
       className={cn(
         stage,
         "relative flex h-full w-full flex-col items-center justify-center overflow-hidden border border-border/60 px-6 py-20 backdrop-blur-md",
-        theme,
       )}
     >
       <h1 className="sr-only">{title}</h1>
@@ -86,11 +78,11 @@ export function ComponentCanvas({
           </ToolButton>
         )}
         <ToolButton
-          label="Flip preview theme"
-          onClick={flipTheme}
+          label="Toggle theme"
+          onClick={toggleTheme}
           reduceMotion={reduceMotion}
         >
-          <ContrastIcon className="size-4" />
+          <ContrastIcon className="size-4 transition-transform duration-300 ease-out dark:rotate-180 motion-reduce:transition-none" />
         </ToolButton>
       </div>
 
