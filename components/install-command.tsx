@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { CheckIcon, CopyIcon } from "@/components/icons";
 
 export function InstallCommand({
   command,
@@ -19,20 +20,33 @@ export function InstallCommand({
     window.setTimeout(() => setCopied(false), 1500);
   };
 
+  // the component name is interchangeable, so it reads dimmed
+  const split = command.lastIndexOf("/");
+  const head = command.slice(0, split + 1);
+  const tail = command.slice(split + 1);
+
   return (
     <div
       className={cn(
-        "flex items-center justify-between gap-4 rounded-md border border-border bg-muted/40 px-4 py-3 font-mono text-sm",
+        "flex h-12 items-center gap-2 rounded-full border border-border/60 bg-background/70 pr-2 pl-5 shadow-sm backdrop-blur-md",
         className,
       )}
     >
-      <code className="truncate">{command}</code>
+      <code className="min-w-0 flex-1 truncate font-mono text-sm">
+        {head}
+        <span className="text-muted-foreground">{tail}</span>
+      </code>
       <button
         type="button"
         onClick={copy}
-        className="shrink-0 rounded-sm border border-border px-2 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
+        aria-label="Copy install command"
+        className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
       >
-        {copied ? "Copied" : "Copy"}
+        {copied ? (
+          <CheckIcon className="size-4" />
+        ) : (
+          <CopyIcon className="size-4" />
+        )}
       </button>
     </div>
   );

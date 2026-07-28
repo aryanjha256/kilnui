@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { components, installCommand } from "@/lib/components";
+import { HeroActions } from "@/components/hero-actions";
 import { SiteHeader } from "@/components/site-header";
 
 export default function HomePage() {
@@ -28,6 +30,10 @@ export default function HomePage() {
             A curated collection of animated, production-ready components.
             Browse them live, then install with the shadcn CLI.
           </p>
+          <HeroActions
+            className="mt-6"
+            command={installCommand(components[0].name)}
+          />
         </div>
       </div>
     </main>
