@@ -12,8 +12,8 @@ import { squircle } from "@/lib/style";
 import { cn } from "@/lib/utils";
 import { PanelIcon } from "@/components/icons";
 
-const RAIL = 272;
-const PAD = 10;
+const RAIL = 300;
+const GAP = 10;
 const spring = {
   type: "spring",
   stiffness: 420,
@@ -74,20 +74,23 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
   return (
     <WorkspaceContext.Provider value={workspace}>
       <motion.div
-        animate={{ padding: expanded ? 0 : PAD }}
         transition={transition}
-        className="flex h-svh w-full gap-2.5"
+        className="flex h-svh w-full p-2.5"
       >
         <AnimatePresence initial={false}>
           {railOpen && !expanded && (
             <motion.div
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: RAIL, opacity: 1 }}
+              animate={{ width: RAIL + GAP, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={transition}
               className="hidden shrink-0 overflow-hidden lg:block"
             >
-              <Rail id="rail" width={RAIL} onToggle={() => setRailOpen(false)} />
+              <Rail
+                id="rail"
+                width={RAIL}
+                onToggle={() => setRailOpen(false)}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -181,43 +184,64 @@ function Rail({
         </Link>
       </div>
 
-      <p className="px-6 pt-7 pb-2 text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase">
-        Components
-      </p>
-
       <nav
         aria-label="Components"
         className="min-h-0 flex-1 overflow-y-auto px-3 pb-4"
       >
-        <ul className="flex flex-col">
-          {components.map((item) => {
+        <ul className="flex flex-col h-full justify-center">
+          {components.map((item, index) => {
             const active = pathname === item.href;
 
             return (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  onClick={onNavigate}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
-                    active
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  <span className="relative flex size-1.5 shrink-0 items-center justify-center">
-                    {active && (
-                      <motion.span
-                        layoutId={`${id}-marker`}
-                        transition={reduceMotion ? instant : spring}
-                        className="absolute size-1.5 rounded-full bg-kiln"
-                      />
+              <React.Fragment key={item.name}>
+                {index > 0 && (
+                  <li aria-hidden="true" className="flex flex-col pl-2">
+                    <span className="flex h-2.5 items-center">
+                      <span className="h-0.5 w-8 rounded-full bg-card-foreground/60" />
+                    </span>
+                    <span className="flex h-2.5 items-center">
+                      <span className="h-0.5 w-8 rounded-full bg-card-foreground/60" />
+                    </span>
+                  </li>
+                )}
+                <li>
+                  <Link
+                    href={item.href}
+                    onClick={onNavigate}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "group flex h-2.5 items-center gap-1 pr-3 pl-2 text-sm transition-colors",
+                      active
+                        ? "font-medium text-kiln"
+                        : "text-muted-foreground hover:text-kiln",
                     )}
-                  </span>
-                  <span className="truncate">{item.title}</span>
-                </Link>
-              </li>
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="relative flex h-2.5 shrink-0 items-center"
+                    >
+                      <span
+                        className={cn(
+                          "h-0.5 rounded-full bg-card-foreground/60 transition-[width,background-color] duration-300 ease-out motion-reduce:transition-none",
+                          active
+                            ? "w-14"
+                            : "w-8 group-hover:w-14 group-hover:bg-kiln",
+                        )}
+                      />
+                      {active && (
+                        <motion.span
+                          layoutId={`${id}-marker`}
+                          transition={reduceMotion ? instant : spring}
+                          className="absolute left-0 h-0.5 w-14 rounded-full bg-kiln"
+                        />
+                      )}
+                    </span>
+                    <span className="whitespace-nowrap font-semibold text-lg leading-none tracking-tight">
+                      {item.title}
+                    </span>
+                  </Link>
+                </li>
+              </React.Fragment>
             );
           })}
         </ul>
