@@ -27,10 +27,9 @@ export function ComponentCard({
       initial={reduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.07, ease }}
-      whileHover={reduceMotion ? undefined : { y: -3 }}
       className={cn(
         panel,
-        "group relative flex flex-col p-2 transition-colors hover:border-border",
+        "group relative flex flex-col p-2 transition-colors hover:bg-card/80",
       )}
       style={squircle}
     >
@@ -55,7 +54,10 @@ export function ComponentCard({
             {item.title}
           </Link>
         </h2>
-        <ArrowUpRightIcon className="size-4 shrink-0 text-kiln transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        <ArrowUpRightIcon
+          className="size-4 shrink-0 text-kiln"
+          strokeWidth={3}
+        />
       </div>
     </motion.article>
   );
