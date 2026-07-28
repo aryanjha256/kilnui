@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { toSnippet } from "@/lib/highlight";
-import { readComponentSource, readUsageSource } from "@/lib/source";
+import { readRegistryItem, readUsageSource } from "@/lib/source";
 import { WorkspaceShell } from "@/components/workspace-shell";
 
 export default async function ComponentLayout({
@@ -12,13 +12,18 @@ export default async function ComponentLayout({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [source, usage] = await Promise.all([
-    readComponentSource(slug).then(toSnippet),
+  const [item, usage] = await Promise.all([
+    readRegistryItem(slug),
     readUsageSource(slug).then(toSnippet),
   ]);
+  const source = await toSnippet(item.source);
 
   return (
-    <WorkspaceShell source={source} usage={usage}>
+    <WorkspaceShell
+      source={source}
+      usage={usage}
+      dependencies={item.dependencies}
+    >
       {children}
     </WorkspaceShell>
   );

@@ -55,10 +55,12 @@ export function useWorkspace() {
 export function WorkspaceShell({
   source,
   usage,
+  dependencies,
   children,
 }: {
   source?: Snippet | null;
   usage?: Snippet | null;
+  dependencies?: string[];
   children: React.ReactNode;
 }) {
   const [railOpen, setRailOpen] = React.useState(true);
@@ -246,7 +248,10 @@ export function WorkspaceShell({
                   width={DETAIL}
                   meta={meta}
                   usage={usage}
+                  dependencies={dependencies}
                   source={codeOpen ? source : null}
+                  hasSource={Boolean(source)}
+                  onViewSource={toggleCode}
                   codeDelay={codeDelayed ? CODE_DELAY : 0}
                   transition={transition}
                 />
@@ -278,7 +283,10 @@ export function WorkspaceShell({
                   width={DETAIL}
                   meta={meta}
                   usage={usage}
+                  dependencies={dependencies}
                   source={codeOpen ? source : null}
+                  hasSource={Boolean(source)}
+                  onViewSource={toggleCode}
                   codeDelay={codeDelayed ? CODE_DELAY : 0}
                   transition={transition}
                   className="bg-background"
@@ -297,7 +305,10 @@ function DetailRail({
   width,
   meta,
   usage,
+  dependencies,
   source,
+  hasSource,
+  onViewSource,
   codeDelay,
   transition,
   className,
@@ -305,7 +316,10 @@ function DetailRail({
   width: number;
   meta: ComponentMeta;
   usage?: Snippet | null;
+  dependencies?: string[];
   source?: Snippet | null;
+  hasSource?: boolean;
+  onViewSource?: () => void;
   codeDelay: number;
   transition: Transition;
   className?: string;
@@ -319,7 +333,13 @@ function DetailRail({
         className,
       )}
     >
-      <ComponentDetails meta={meta} usage={usage} />
+      <ComponentDetails
+        meta={meta}
+        usage={usage}
+        dependencies={dependencies}
+        hasSource={hasSource}
+        onViewSource={onViewSource}
+      />
 
       <AnimatePresence>
         {source && (

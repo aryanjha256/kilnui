@@ -10,6 +10,7 @@ export interface ComponentMeta {
   description: string;
   interaction: string;
   props: ComponentProp[];
+  notes: string[];
   categories: string[];
   href: string;
 }
@@ -28,6 +29,11 @@ export const components: ComponentMeta[] = [
         description:
           "Width of the bright band, multiplied by the text length. Defaults to 2.",
       },
+    ],
+    notes: [
+      "The sweep is a css animation, so it costs nothing on the main thread.",
+      "The gradient clips to the text and sweeps currentColor, so it inherits whatever color you set.",
+      "Reduced motion renders plain text with no gradient at all.",
     ],
     categories: ["text", "animation"],
     href: "/components/text-shimmer",
@@ -52,6 +58,11 @@ export const components: ComponentMeta[] = [
       },
       { name: "disabled", description: "Blocks input and dims the control." },
     ],
+    notes: [
+      "Segments are read-only inputs, so typing replaces digits instead of inserting them.",
+      "Values wrap, so stepping past the top of a segment returns to zero.",
+      "Each segment renders the shadcn input, so it picks up your input styles.",
+    ],
     categories: ["inputs", "time"],
     href: "/components/duration-picker",
   },
@@ -61,6 +72,17 @@ export function getComponent(name: string) {
   return components.find((c) => c.name === name);
 }
 
-export function installCommand(name: string) {
-  return `npx shadcn@latest add @kiln/${name}`;
+export const packageManagers = ["npm", "pnpm", "yarn", "bun"] as const;
+
+export type PackageManager = (typeof packageManagers)[number];
+
+const runners: Record<PackageManager, string> = {
+  npm: "npx",
+  pnpm: "pnpm dlx",
+  yarn: "yarn dlx",
+  bun: "bunx --bun",
+};
+
+export function installCommand(name: string, manager: PackageManager = "npm") {
+  return `${runners[manager]} shadcn@latest add @kiln/${name}`;
 }
