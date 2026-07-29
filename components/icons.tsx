@@ -113,3 +113,19 @@ export function ArrowRightIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function HeartIcon(props: IconProps) {
+  return (
+    <svg {...stroked} {...props}>
+      <path d="M12 20s-7-4.35-7-9a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 4.65-7 9-7 9Z" />
+    </svg>
+  );
+}
+
+export function ShareIcon(props: IconProps) {
+  return (
+    <svg {...stroked} {...props}>
+      <path d="M12 3v13M8 7l4-4 4 4M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
+    </svg>
+  );
+}

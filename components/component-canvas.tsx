@@ -73,7 +73,7 @@ export function ComponentCanvas({
         <h1 className="sr-only">{meta.title}</h1>
 
         {/* fixed width, so a resizing canvas moves this block without re-laying it out */}
-        <div className="relative flex w-md max-w-full flex-col items-center gap-8">
+        <div className="relative flex w-2xl max-w-full flex-col items-center gap-8">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

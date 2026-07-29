@@ -6,6 +6,7 @@
     "registry/lib/registry.json",
     "registry/hooks/registry.json",
     "registry/text/registry.json",
-    "registry/inputs/registry.json"
+    "registry/inputs/registry.json",
+    "registry/media/registry.json"
   ]
 }

@@ -23,6 +23,11 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  /* package manager brands, darkened to stay legible on a light surface */
+  --pm-npm: oklch(0.525 0.194 25.7);
+  --pm-pnpm: oklch(0.508 0.108 73.3);
+  --pm-yarn: oklch(0.521 0.091 235.2);
+  --pm-bun: oklch(0.539 0.193 6.5);
 }
 
 /* mirrors :root so a preview can force light inside a dark page */
@@ -46,6 +51,10 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --pm-npm: oklch(0.525 0.194 25.7);
+  --pm-pnpm: oklch(0.508 0.108 73.3);
+  --pm-yarn: oklch(0.521 0.091 235.2);
+  --pm-bun: oklch(0.539 0.193 6.5);
 }
 
 .dark {
@@ -68,10 +77,19 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
+  /* brightened, since the light-surface versions go muddy on a dark one */
+  --pm-npm: oklch(0.663 0.192 21.9);
+  --pm-pnpm: oklch(0.8 0.167 77);
+  --pm-yarn: oklch(0.737 0.103 229.7);
+  --pm-bun: oklch(0.776 0.137 6.5);
 }
 
 @theme inline {
   --color-kiln: var(--kiln);
+  --color-pm-npm: var(--pm-npm);
+  --color-pm-pnpm: var(--pm-pnpm);
+  --color-pm-yarn: var(--pm-yarn);
+  --color-pm-bun: var(--pm-bun);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

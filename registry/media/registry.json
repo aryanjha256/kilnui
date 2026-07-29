@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "card-fan",
+      "type": "registry:ui",
+      "title": "Card Fan",
+      "description": "Row of tilted, overlapping cards that straighten and reveal an overlay on hover.",
+      "categories": ["media", "gallery"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["@kiln/utils"],
+      "files": [
+        {
+          "path": "card-fan/card-fan.tsx",
+          "type": "registry:ui",
+          "target": "@ui/kiln/card-fan.tsx"
+        }
+      ]
+    }
+  ]
+}
